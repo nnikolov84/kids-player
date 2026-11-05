@@ -15,8 +15,12 @@
   </head>
   <body>
     <div id="app">
-      <div id="tilePanel" aria-label="Favorites panel">
-        <div id="tileGrid" role="listbox" aria-label="Favorite items"></div>
+      <div id="tilePanel" aria-label="Library">
+        <h2 class="libraryHeading">Playlists</h2>
+        <div id="tileGrid" role="listbox" aria-label="Favorite items" hidden></div>
+        <div id="playlistView" class="playlistView">
+          <div id="playlistList" role="listbox" aria-label="Spotify playlists"></div>
+        </div>
       </div>
 
       <div id="playerPanel" aria-label="Now playing panel">
@@ -53,6 +57,7 @@
           </button>
         </div>
 
+        <input id="trackFilter" type="search" placeholder="Filter songs in this playlist" aria-label="Filter playlist songs" autocomplete="off" hidden />
         <ul id="trackList" aria-label="Current tracks"></ul>
       </div>
     </div>
@@ -61,6 +66,11 @@
       <span id="connectionStatusIcon" class="icon connectionStatusIcon icon-connected" aria-hidden="true"></span>
       <span id="connectionStatusText"></span>
     </div>
+
+    <details id="loginDebugPanel" class="loginDebugPanel">
+      <summary>Login debug</summary>
+      <ol id="loginDebugLog" aria-live="polite" aria-relevant="additions"></ol>
+    </details>
 
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script src="/app.js"></script>
