@@ -10,6 +10,7 @@
   --icon-size: clamp(1.25rem, 2.6vmin, 1.8rem);
   --tile-min: clamp(4.5rem, 10vmin, 5.5rem);
   --tile-max: clamp(7rem, 14vmin, 8.5rem);
+  --mobile-playlist-rail-size: 5.25rem;
 
   --bg: #000;
   --panel-bg: #111;
@@ -89,6 +90,7 @@ html, body { margin: 0; inline-size: 100%; block-size: 100%; overflow: hidden; b
 #connectionStatus[hidden] { display: none; }
 .connectionStatusIcon { inline-size: 1.05rem; block-size: 1.05rem; flex: none; }
 .loginDebugPanel { position: fixed; right: var(--pad); bottom: calc(var(--pad) * 0.8); z-index: 51; inline-size: min(28rem, calc(100vw - (2 * var(--pad)))); max-block-size: min(42vh, 20rem); overflow: hidden; color: var(--text); background: rgba(15, 15, 15, 0.94); border: 1px solid #444; border-radius: 6px; font-size: 0.78rem; }
+.loginDebugPanel[hidden] { display: none; }
 .loginDebugPanel summary { padding: 0.45rem 0.65rem; cursor: pointer; font-weight: 700; }
 #loginDebugLog { display: grid; gap: 0.35rem; max-block-size: min(36vh, 16rem); overflow: auto; margin: 0; padding: 0.25rem 0.7rem 0.65rem 2rem; color: var(--text-muted); overflow-wrap: anywhere; }
 #loginDebugLog li[data-level="error"] { color: #ff9a9a; }
@@ -117,4 +119,17 @@ html, body { margin: 0; inline-size: 100%; block-size: 100%; overflow: hidden; b
   #tilePanel { grid-column: 1; }
   #playerPanel { grid-column: 2; }
   #tileGrid { grid-template-columns: repeat(auto-fit, minmax(clamp(var(--tile-min), 15dvh, var(--tile-max)), 1fr)); }
+}
+
+@media (max-width: 900px) {
+  #app { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) var(--mobile-playlist-rail-size); }
+  #playerPanel { grid-row: 1; grid-column: 1; padding-block-end: calc(var(--gap) + 2rem); }
+  #tilePanel { grid-row: 2; grid-column: 1; grid-template-rows: minmax(0, 1fr); overflow: hidden; }
+  .libraryHeading { display: none; }
+  .playlistView { min-inline-size: 0; overflow: hidden; }
+  #playlistList { display: flex; align-items: center; block-size: 100%; gap: var(--gap); overflow-x: auto; overflow-y: hidden; padding-inline: 0.15rem; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; touch-action: pan-x; }
+  .playlistItem { display: flex; flex: 0 0 4.65rem; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem; block-size: calc(var(--mobile-playlist-rail-size) - 0.35rem); min-block-size: 0; padding: 0.2rem; text-align: center; scroll-snap-align: start; }
+  .playlistItem img { inline-size: 3rem; block-size: 3rem; flex: none; }
+  .playlistName { inline-size: 100%; font-size: 0.62rem; line-height: 1.1; text-align: center; }
+  #connectionStatus { bottom: calc(var(--mobile-playlist-rail-size) + var(--pad)); max-inline-size: min(88vw, 30rem); }
 }

@@ -20,6 +20,7 @@ const SPOTIFY = {
 const SPOTIFY_SCOPE_STORAGE_KEY = 'spotify_scope_signature';
 const SPOTIFY_SCOPE_SIGNATURE = SPOTIFY.scopes.slice().sort().join(' ');
 const PLAYLIST_FILTER_KEYWORD = 'SOPHY';
+const ENABLE_LOGIN_DEBUG_INFO = false;
 
 const CONNECTION_STATES = {
   INIT: 'init',
@@ -389,6 +390,12 @@ function setStartupStep(step) {
 }
 
 function restoreLoginDebugEntries() {
+  if (!ENABLE_LOGIN_DEBUG_INFO) {
+    ui.loginDebugPanel.hidden = true;
+    return;
+  }
+
+  ui.loginDebugPanel.hidden = false;
   try {
     const savedEntries = JSON.parse(sessionStorage.getItem('spotify_login_debug') || '[]');
     if (Array.isArray(savedEntries)) {
@@ -404,6 +411,10 @@ function restoreLoginDebugEntries() {
 }
 
 function addLoginDebugEntry(message, level) {
+  if (!ENABLE_LOGIN_DEBUG_INFO) {
+    return;
+  }
+
   const entry = {
     time: new Date().toLocaleTimeString(),
     message: String(message).slice(0, 400),
@@ -425,7 +436,8 @@ function addLoginDebugEntry(message, level) {
 }
 
 function renderLoginDebugEntries() {
-  if (!ui.loginDebugLog) {
+  if (!ENABLE_LOGIN_DEBUG_INFO || !ui.loginDebugLog) {
+    ui.loginDebugPanel.hidden = true;
     return;
   }
 
